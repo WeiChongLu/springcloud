@@ -28,7 +28,7 @@ public class AuthServiceTest {
 
     @Before
     public void before() throws NoSuchFieldException, IllegalAccessException {
-        authService = new AuthService();
+        authService = new AuthServiceImpl();
         setInstancePrivateField(authService, "signingKey", "123456");
         setInstancePrivateField(authService, "ignoreUrls", "/oauth,/open");
         MockitoAnnotations.initMocks(this);

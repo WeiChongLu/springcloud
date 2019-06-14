@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.context.annotation.ComponentScan;
+import org.springframework.core.Ordered;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ import reactor.core.publisher.Mono;
 //@Configuration
 @ComponentScan(basePackages = "com.springboot.cloud.auth.client")
 @Slf4j
-public class AccessGatewayFilter implements GlobalFilter {
+public class AccessGatewayFilter implements GlobalFilter, Ordered {
 
     private final static String X_CLIENT_TOKEN_USER = "x-client-token-user";
     private final static String X_CLIENT_TOKEN = "x-client-token";
@@ -71,5 +72,10 @@ public class AccessGatewayFilter implements GlobalFilter {
         DataBuffer buffer = serverWebExchange.getResponse()
                 .bufferFactory().wrap(HttpStatus.UNAUTHORIZED.getReasonPhrase().getBytes());
         return serverWebExchange.getResponse().writeWith(Flux.just(buffer));
+    }
+
+    @Override
+    public int getOrder() {
+        return -100;
     }
 }

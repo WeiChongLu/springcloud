@@ -18,7 +18,7 @@ import java.util.stream.Stream;
 
 @Service
 @Slf4j
-public class AuthService implements IAuthService {
+public class AuthServiceImpl implements IAuthService {
 
     @Autowired
     private AuthProvider authProvider;
