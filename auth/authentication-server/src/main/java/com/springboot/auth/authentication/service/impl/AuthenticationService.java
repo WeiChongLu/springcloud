@@ -56,8 +56,9 @@ public class AuthenticationService implements IAuthenticationService {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         //获取此url，method访问对应的权限资源信息
         ConfigAttribute urlConfigAttribute = findConfigAttributesByUrl(authRequest);
-        if (NONEXISTENT_URL.equals(urlConfigAttribute.getAttribute()))
+        if (NONEXISTENT_URL.equals(urlConfigAttribute.getAttribute())) {
             log.debug("url未在资源池中找到，拒绝访问");
+        }
         //获取此访问用户所有角色拥有的权限资源
         Set<Resource> userResources = findResourcesByAuthorityRoles(authentication.getAuthorities());
         //用户拥有权限资源 与 url要求的资源进行对比
